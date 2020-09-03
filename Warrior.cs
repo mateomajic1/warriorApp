@@ -16,6 +16,10 @@ namespace warriorApp
             WeaponType = weaponType;
         }
 
+        public Warrior()
+        {
+        }
+
         public void ListAllWarriors(List<Warrior> warriors)
         {
             foreach (var warrior in warriors)

@@ -43,14 +43,12 @@ namespace warriorApp
             bool battle = true;
             var random = new Random();
 
-            bool alive = true;
-
             while (battle)
             {
                 Random random1 = new Random();
 
                 var num = random1.Next(1, 3);
-
+                bool alive;
                 int damage = 0;
 
                 switch (num)
@@ -58,9 +56,11 @@ namespace warriorApp
                     case 1:
                         damage = warrior1.WeaponType.Sword.WeaponStrength;
                         break;
+
                     case 2:
                         damage = warrior1.WeaponType.Spear.WeaponStrength;
                         break;
+
                     case 3:
                         damage = warrior1.WeaponType.Hammer.WeaponStrength;
                         break;
@@ -68,29 +68,41 @@ namespace warriorApp
 
                 warrior1.WarriorHealth = warrior1.WarriorHealth - damage;
 
-                alive = checkAlive(warrior1);
+                if (warrior1.WarriorHealth < damage)
+                {
+                    warrior1.WarriorHealth = 0;
 
-                Console.WriteLine($"{warrior1.WarriorName} attacked and dealt {damage} points of damage");
+                    break;
+                }
+
+                alive = checkAlive(warrior1);
 
                 if (!alive)
                 {
                     break;
                 }
+                alive = checkAlive(warrior2);
+                if (!alive)
+                {
+                    break;
+                }
+                Console.WriteLine($"{warrior1.WarriorName} attacked and dealt {damage} points of damage");
 
-                alive = true;
                 Random random2 = new Random();
                 int damage2 = 0;
 
-                var num2 =random2.Next(1, 3);
+                var num2 = random2.Next(1, 3);
 
                 switch (num2)
                 {
                     case 1:
                         damage2 = warrior2.WeaponType.Sword.WeaponStrength;
                         break;
+
                     case 2:
                         damage2 = warrior2.WeaponType.Spear.WeaponStrength;
                         break;
+
                     case 3:
                         damage2 = warrior2.WeaponType.Hammer.WeaponStrength;
                         break;
@@ -98,7 +110,12 @@ namespace warriorApp
 
                 warrior2.WarriorHealth = warrior2.WarriorHealth - damage2;
 
-                Console.WriteLine($"{warrior2.WarriorName} attacked and dealt {damage2} points of damage");
+                if (warrior2.WarriorHealth < damage)
+                {
+                    warrior2.WarriorHealth = 0;
+
+                    break;
+                }
 
                 alive = checkAlive(warrior2);
 
@@ -106,17 +123,25 @@ namespace warriorApp
                 {
                     break;
                 }
+
+                alive = checkAlive(warrior1);
+                if (!alive)
+                {
+                    break;
+                }
+
+                Console.WriteLine($"{warrior2.WarriorName} attacked and dealt {damage2} points of damage");
             }
 
             Warrior winner;
 
-            if (warrior1.WarriorHealth > 0)
+            if (warrior1.WarriorHealth == 0)
             {
-                winner = warrior1;
+                winner = warrior2;
             }
             else
             {
-                winner = warrior2;
+                winner = warrior1;
             }
 
             return winner;
@@ -124,15 +149,15 @@ namespace warriorApp
 
         public static bool checkAlive(Warrior warrior)
         {
-            bool alive = true;
+            bool alive;
 
-            if (warrior.WarriorHealth > 0)
+            if (warrior.WarriorHealth < 0 || warrior.WarriorHealth == 0)
             {
-                alive = true;
+                alive = false;
             }
             else
             {
-                alive = false;
+                alive = true;
             }
 
             return alive;
