@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace warriorApp
 {
@@ -46,7 +47,6 @@ namespace warriorApp
             while (battle)
             {
                 Random random1 = new Random();
-
                 var num = random1.Next(1, 3);
                 bool alive;
                 int damage = 0;
@@ -86,8 +86,8 @@ namespace warriorApp
                 {
                     break;
                 }
-                Console.WriteLine($"{warrior1.WarriorName} attacked and dealt {damage} points of damage");
-
+                Console.WriteLine($"{warrior1.WarriorName} attacked and dealt {damage} points of damage, {warrior1.WarriorName} has {warrior1.WarriorHealth} hp left");
+                System.Threading.Thread.Sleep(1000);
                 Random random2 = new Random();
                 int damage2 = 0;
 
@@ -130,7 +130,8 @@ namespace warriorApp
                     break;
                 }
 
-                Console.WriteLine($"{warrior2.WarriorName} attacked and dealt {damage2} points of damage");
+                Console.WriteLine($"{warrior2.WarriorName} attacked and dealt {damage2} points of damage, {warrior2.WarriorName} has {warrior2.WarriorHealth} hp left");
+                System.Threading.Thread.Sleep(1000);
             }
 
             Warrior winner;
@@ -161,6 +162,17 @@ namespace warriorApp
             }
 
             return alive;
+        }
+
+        private static void slow()
+        {
+            int seconds = 5 * 10000;
+            var timer = new Timer(TimerMethod, null, 0, seconds);
+        }
+
+        private static void TimerMethod(object o)
+        {
+            Console.WriteLine("Running" + DateTime.Now);
         }
     }
 }
