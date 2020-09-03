@@ -20,14 +20,14 @@ namespace warriorApp
             for (int i = 0; i < 5; i++)
             {
                 var hp = rng.Next(90, 100);
-                string warriorName = "Sime" + i.ToString();
+                string warriorName = "Sime " + i.ToString();
 
                 var warrior = new Warrior(warriorName, hp, weaponType);
                 warriors.Add(warrior);
             }
 
             Console.WriteLine("Starting battle...");
-
+            System.Threading.Thread.Sleep(500);
             var warIdx = rng.Next(warriors.Count);
             var warrior1 = warriors[warIdx];
 
@@ -43,7 +43,7 @@ namespace warriorApp
         {
             bool battle = true;
             var random = new Random();
-
+            Console.WriteLine($"{warrior1.WarriorName} with {warrior1.WarriorHealth} hp VS {warrior2.WarriorName} with {warrior2.WarriorHealth} HP");
             while (battle)
             {
                 Random random1 = new Random();
@@ -55,6 +55,7 @@ namespace warriorApp
                 {
                     case 1:
                         damage = warrior1.WeaponType.Sword.WeaponStrength;
+
                         break;
 
                     case 2:
@@ -66,7 +67,7 @@ namespace warriorApp
                         break;
                 }
 
-                warrior1.WarriorHealth = warrior1.WarriorHealth - damage;
+                warrior2.WarriorHealth = warrior2.WarriorHealth - damage;
 
                 if (warrior1.WarriorHealth < damage)
                 {
@@ -86,8 +87,9 @@ namespace warriorApp
                 {
                     break;
                 }
+                System.Threading.Thread.Sleep(500);
                 Console.WriteLine($"{warrior1.WarriorName} attacked and dealt {damage} points of damage, {warrior1.WarriorName} has {warrior1.WarriorHealth} hp left");
-                System.Threading.Thread.Sleep(1000);
+
                 Random random2 = new Random();
                 int damage2 = 0;
 
@@ -108,7 +110,7 @@ namespace warriorApp
                         break;
                 }
 
-                warrior2.WarriorHealth = warrior2.WarriorHealth - damage2;
+                warrior1.WarriorHealth = warrior1.WarriorHealth - damage2;
 
                 if (warrior2.WarriorHealth < damage)
                 {
@@ -129,9 +131,8 @@ namespace warriorApp
                 {
                     break;
                 }
-
+                System.Threading.Thread.Sleep(500);
                 Console.WriteLine($"{warrior2.WarriorName} attacked and dealt {damage2} points of damage, {warrior2.WarriorName} has {warrior2.WarriorHealth} hp left");
-                System.Threading.Thread.Sleep(1000);
             }
 
             Warrior winner;
